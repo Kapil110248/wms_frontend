@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WMS - Warehouse Management System</title>
+    <style>
+        /* Belt + suspenders CSS */
+        .goog-te-banner-frame,
+        .skiptranslate>iframe,
+        iframe.goog-te-banner-frame {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            max-height: 0 !important;
+        }
+
+        body {
+            top: 0px !important;
+            margin-top: 0px !important;
+        }
+    </style>
+    <script>
+        // Use a simpler approach to hide the Google Translate top bar and tooltips
+        document.addEventListener('DOMContentLoaded', function () {
+            // Reset body shifts that Google forces
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .goog-te-banner-frame, .goog-te-balloon-frame, .goog-gt-tt, .goog-te-balloon-frame.skiptranslate, .goog-te-spinner-pos { display: none !important; }
+                .goog-te-gadget-icon, .goog-te-spinner, .goog-te-spinner-pos, #goog-gt-tt, .goog-te-balloon-frame { display: none !important; visibility: hidden !important; }
+                .skiptranslate iframe { display: none !important; }
+                body { top: 0px !important; margin-top: 0px !important; }
+                /* Hide the circle spinner specifically */
+                .goog-te-spinner-pos { display: none !important; }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>

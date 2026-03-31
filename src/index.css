@@ -1,0 +1,327 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #f5f5f5;
+    --foreground: #171717;
+  }
+
+  html {
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900;
+    min-height: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+/* Ant Design customizations */
+.ant-layout {
+  background: transparent;
+  min-height: 100vh;
+}
+
+.ant-layout-content {
+  background: transparent;
+}
+
+/* Fixed sidebar styles */
+.ant-layout-sider-fixed {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+/* Sticky header styles */
+.ant-layout-header {
+  position: sticky !important;
+  top: 0;
+  z-index: 99;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Custom Sidebar Menu Professional Styling */
+.custom-sidebar-menu.ant-menu-dark {
+  background: transparent !important;
+}
+
+.custom-sidebar-menu.ant-menu-dark .ant-menu-item,
+.custom-sidebar-menu.ant-menu-dark .ant-menu-submenu-title {
+  height: 44px !important;
+  line-height: 44px !important;
+  border-radius: 10px !important;
+  margin-bottom: 2px !important;
+  font-weight: 400 !important;
+  font-size: 0.9375rem !important;
+  letter-spacing: 0.01em !important;
+  color: #ffffff !important;
+  margin-inline: 10px !important;
+  width: calc(100% - 20px) !important;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease !important;
+}
+
+.custom-sidebar-menu.ant-menu-dark .ant-menu-item:hover,
+.custom-sidebar-menu.ant-menu-dark .ant-menu-submenu-title:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+.custom-sidebar-menu.ant-menu-dark .ant-menu-item-selected {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px -2px rgba(37, 99, 235, 0.45) !important;
+  font-weight: 400 !important;
+}
+
+.custom-sidebar-menu.ant-menu-dark .ant-menu-submenu-selected>.ant-menu-submenu-title {
+  color: #ffffff !important;
+  font-weight: 400 !important;
+}
+
+.custom-sidebar-menu.ant-menu-dark .ant-menu-inline.ant-menu-sub {
+  background: rgba(15, 23, 42, 0.6) !important;
+  border-radius: 10px !important;
+  margin: 2px 10px 6px !important;
+  padding: 6px 0 !important;
+  border-left: 2px solid rgba(59, 130, 246, 0.3) !important;
+}
+
+.custom-sidebar-menu.ant-menu-dark .ant-menu-sub .ant-menu-item {
+  height: 40px !important;
+  line-height: 40px !important;
+  margin-inline: 8px !important;
+  width: calc(100% - 16px) !important;
+  font-size: 0.875rem !important;
+  padding-left: 40px !important;
+}
+
+.custom-sidebar-menu.ant-menu-dark .ant-menu-sub .ant-menu-item-selected {
+  background-color: rgba(59, 130, 246, 0.25) !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  font-weight: 400 !important;
+}
+
+.custom-sidebar-menu.ant-menu-dark .ant-menu-sub .ant-menu-item {
+  color: #ffffff !important;
+  font-weight: 400 !important;
+}
+
+.custom-sidebar-menu.ant-menu-dark .ant-menu-submenu-arrow {
+  color: #ffffff !important;
+  opacity: 0.9 !important;
+}
+
+.ant-layout-sider-collapsed .custom-sidebar-menu .ant-menu-item,
+.ant-layout-sider-collapsed .custom-sidebar-menu .ant-menu-submenu-title {
+  padding-inline: calc(50% - 14px) !important;
+  margin-inline: 8px !important;
+  width: calc(100% - 16px) !important;
+}
+
+/* Animations */
+.animate-in {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+}
+
+.fade-in {
+  animation-name: fadeIn;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Print Styles */
+@media print {
+  @page {
+    margin: 15mm;
+  }
+
+  .ant-layout-sider,
+  .ant-layout-header,
+  .ant-layout-footer,
+  .no-print,
+  .ant-btn,
+  .ant-select,
+  .ant-picker,
+  .ant-tabs-nav {
+    display: none !important;
+  }
+
+  .ant-layout,
+  .ant-layout-content,
+  #print-layout-root {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    width: 100% !important;
+    min-height: auto !important;
+    left: 0 !important;
+  }
+
+  /* Target the content container directly */
+  .ant-layout-content>div {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  #reports-page {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .shadow-sm,
+  .shadow-md,
+  .shadow-lg,
+  .shadow-xl {
+    box-shadow: none !important;
+    border: 1px solid #eee !important;
+  }
+
+  /* Force colors in print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* =========================================
+   Google Translate Widget Styling
+   ========================================= */
+
+/* Container wrapper */
+#google_translate_element {
+  display: inline-flex !important;
+  align-items: center !important;
+  vertical-align: middle !important;
+}
+
+/* Gadget wrapper — DO NOT set font-size:0 it collapses! */
+.goog-te-gadget {
+  display: inline-flex !important;
+  align-items: center !important;
+  font-family: inherit !important;
+}
+
+/* The actual SELECT dropdown */
+.goog-te-gadget select.goog-te-combo {
+  display: block !important;
+  visibility: visible !important;
+  margin: 0 !important;
+  padding: 4px 10px !important;
+  border-radius: 8px !important;
+  border: 1px solid #d1d5db !important;
+  background-color: #f9fafb !important;
+  font-size: 13px !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  color: #374151 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  height: 32px !important;
+  min-width: 110px !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  -webkit-appearance: auto !important;
+}
+
+.goog-te-gadget select.goog-te-combo:hover,
+.goog-te-gadget select.goog-te-combo:focus {
+  border-color: #3b82f6 !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
+}
+
+/* Hide "Powered by Google Translate" attribution link text */
+.goog-te-gadget>span>a {
+  display: none !important;
+}
+
+.goog-te-gadget>span {
+  display: none !important;
+}
+
+/* Hide Google Translate top banner that appears on translated pages */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+.goog-te-balloon-frame {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Prevent page shifting down due to Google's top bar */
+body {
+  top: 0 !important;
+  position: static !important;
+  margin-top: 0 !important;
+}
+
+/* Also hide the iframe Google injects */
+iframe.goog-te-banner-frame {
+  display: none !important;
+}
+
+/* Tooltip */
+#goog-gt-tt,
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.goog-te-menu-frame {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 8px !important;
+  border: none !important;
+}
