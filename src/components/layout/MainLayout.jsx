@@ -183,6 +183,8 @@ export const MainLayout = ({ children }) => {
 
     const getInventoryManagerMenu = () => [
         { key: '/dashboards/inventory-manager', icon: <DashboardOutlined />, label: 'Dashboard' },
+        { key: '/stock-in', icon: <ArrowUpOutlined style={{ color: '#00FF00' }} />, label: 'Stock In' },
+        { key: '/stock-out', icon: <ArrowDownOutlined style={{ color: '#FF0000' }} />, label: 'Stock Out' },
         {
             key: 'nav-warehouses',
             icon: <HomeOutlined />,
@@ -201,8 +203,6 @@ export const MainLayout = ({ children }) => {
                 { key: '/products/import-export', label: 'Import/Export' },
             ],
         },
-        { key: '/stock-in', icon: <ArrowUpOutlined style={{ color: '#00FF00' }} />, label: 'Stock In' },
-        { key: '/stock-out', icon: <ArrowDownOutlined style={{ color: '#FF0000' }} />, label: 'Stock Out' },
         {
             key: 'nav-manufacturing',
             icon: <BoxPlotOutlined />,
@@ -239,6 +239,8 @@ export const MainLayout = ({ children }) => {
 
     const allMenuItems = [
         { key: '/dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
+        { key: '/stock-in', icon: <ArrowUpOutlined style={{ color: '#00FF00' }} />, label: <span className="font-bold text-green-500">Stock In</span> },
+        { key: '/stock-out', icon: <ArrowDownOutlined style={{ color: '#FF0000' }} />, label: <span className="font-bold text-red-500">Stock Out</span> },
         { key: '/companies', icon: <ShopOutlined />, label: 'Company Management' },
         {
             key: 'nav-warehouses',
@@ -261,8 +263,6 @@ export const MainLayout = ({ children }) => {
                 { key: '/products/import-export', label: 'Import/Export' },
             ],
         },
-        { key: '/stock-in', icon: <ArrowUpOutlined style={{ color: '#00FF00' }} />, label: 'Stock In' },
-        { key: '/stock-out', icon: <ArrowDownOutlined style={{ color: '#FF0000' }} />, label: 'Stock Out' },
         {
             key: 'nav-orders',
             icon: <ShoppingCartOutlined />,

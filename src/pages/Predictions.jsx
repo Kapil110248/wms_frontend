@@ -136,6 +136,7 @@ export default function Predictions() {
                         productId: selectedItem.id,
                         quantityGoal: values.quantity,
                         warehouseId: values.warehouseId,
+                        productionAreaId: selectedItem.productionAreaId,
                         notes: 'Created from Stock Prediction recommendation'
                     })
                 }, token);
