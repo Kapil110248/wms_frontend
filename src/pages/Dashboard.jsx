@@ -115,9 +115,12 @@ export default function Dashboard() {
 
         setDashboardData((prev) => ({
           ...prev,
+          stats: d,
           kpis: {
-            totalStock: { value: d.totalStock ?? 1250 },
+            totalStock: { value: d.totalStock ?? 0 },
             lowStockItems: { value: d.lowStockCount ?? 0 },
+            criticalStockItems: { value: d.criticalStockCount ?? 0 },
+            mediumStockItems: { value: d.mediumStockCount ?? 0 },
             pendingOrders: { value: d.pendingOrders ?? 0 },
             totalRevenue: { value: charts.salesTrend?.reduce((acc, curr) => acc + curr.revenue, 0) || 0 },
             ordersToday: { value: d.totalOrders ?? 0 },
@@ -171,17 +174,31 @@ export default function Dashboard() {
             { label: 'Inventory Units', value: dashboardData.kpis?.totalStock?.value?.toLocaleString() || '0', icon: <DatabaseOutlined className="text-blue-500" /> },
             { label: 'Total Revenue', value: `$${dashboardData.kpis?.totalRevenue?.value?.toLocaleString() || '0'}`, icon: <RiseOutlined className="text-green-500" /> },
             { label: 'Open Orders', value: dashboardData.kpis?.pendingOrders?.value || '0', icon: <ShoppingCartOutlined className="text-purple-500" /> },
-            { label: 'Stock Alerts', value: dashboardData.kpis?.lowStockItems?.value || '0', icon: <WarningOutlined className="text-red-500" />, color: 'text-red-600' },
+            { 
+              label: 'Critical Stock', 
+              value: dashboardData.kpis?.criticalStockItems?.value || '0', 
+              icon: <WarningOutlined className="text-red-500" />, 
+              color: 'text-red-600',
+              extra: (
+                <div className="flex gap-2 mt-1 text-[9px] font-bold uppercase tracking-tight">
+                  <span className="text-orange-500">Low: {dashboardData.kpis?.lowStockItems?.value || 0}</span>
+                  <span className="text-blue-500">Med: {dashboardData.kpis?.mediumStockItems?.value || 0}</span>
+                </div>
+              )
+            },
           ].map((item, i) => (
             <Col xs={24} sm={12} lg={6} key={i}>
               <Card bordered={false} className="shadow-sm rounded-[2rem] bg-slate-50 border-none hover:shadow-md transition-all duration-300">
-                <div className="flex items-center gap-3 mb-4 text-gray-400">
-                  <div className="w-10 h-10 rounded-2xl bg-white shadow-sm flex items-center justify-center">
-                    {item.icon}
-                  </div>
-                  <span className="text-[10px] uppercase font-black tracking-widest text-slate-400">{item.label}</span>
-                </div>
-                <div className={`text-4xl font-black tracking-tighter ${item.color || 'text-slate-900'}`}>{item.value}</div>
+                <Link to={item.label === 'Critical Stock' ? '/predictions' : '#'}>
+                    <div className="flex items-center gap-3 mb-4 text-gray-400">
+                    <div className="w-10 h-10 rounded-2xl bg-white shadow-sm flex items-center justify-center">
+                        {item.icon}
+                    </div>
+                    <span className="text-[10px] uppercase font-black tracking-widest text-slate-400">{item.label}</span>
+                    </div>
+                    <div className={`text-4xl font-black tracking-tighter ${item.color || 'text-slate-900'}`}>{item.value}</div>
+                    {item.extra}
+                </Link>
               </Card>
             </Col>
           ))}

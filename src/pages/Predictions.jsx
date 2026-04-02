@@ -20,14 +20,10 @@ const { Title, Text } = Typography;
 // Map to our 4-level urgency
 const getUrgency = (item) => {
     const status = (item.status || '').toUpperCase();
-    const days = item.daysUntilStockout ?? 9999;
     if (status === 'CRITICAL') return 'critical';
-    if (status === 'LOW') {
-        // differentiate high (<=7d) vs medium (<=14d)
-        if (days <= 7) return 'high';
-        return 'medium';
-    }
-    return 'low'; // HEALTHY
+    if (status === 'LOW') return 'high';
+    if (status === 'MEDIUM') return 'medium';
+    return 'low';
 };
 
 const URGENCY_CONFIG = {

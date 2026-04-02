@@ -190,7 +190,9 @@ export default function AddProduct() {
                 weight: values.weight != null ? values.weight : null,
                 weightUnit: values.weightUnit || null,
                 reorderLevel: values.reorderLevel ?? 0,
-                reorderQty: values.reorderQty != null ? values.reorderQty : null,
+                reorderQty: values.reorderQty ?? 0,
+                lowStockThreshold: values.lowStockThreshold ?? 0,
+                mediumStockThreshold: values.mediumStockThreshold ?? 0,
                 maxStock: values.maxStock != null ? values.maxStock : null,
                 status: values.status || 'ACTIVE',
                 currency: values.currency || 'USD',
@@ -241,6 +243,8 @@ export default function AddProduct() {
         dimensionUnit: 'cm',
         weightUnit: 'kg',
         reorderQty: 0,
+        lowStockThreshold: 0,
+        mediumStockThreshold: 0,
         color: '',
         currency: 'USD',
         defaultProductionAreaId: undefined,
@@ -405,6 +409,16 @@ export default function AddProduct() {
                             </Col>
                             <Col xs={24} md={6}>
                                 <Form.Item label="Reorder Point" name="reorderLevel">
+                                    <InputNumber className="w-full rounded-lg" size="large" min={0} step={0.0001} />
+                                </Form.Item>
+                            </Col>
+                             <Col xs={24} md={6}>
+                                <Form.Item label="Low Stock Threshold" name="lowStockThreshold" tooltip="Upper bound for Low Stock range (e.g. 45 if point is 30)">
+                                    <InputNumber className="w-full rounded-lg" size="large" min={0} step={0.0001} />
+                                </Form.Item>
+                            </Col>
+                             <Col xs={24} md={6}>
+                                <Form.Item label="Medium Stock Threshold" name="mediumStockThreshold" tooltip="Upper bound for Medium Stock range (e.g. 55)">
                                     <InputNumber className="w-full rounded-lg" size="large" min={0} step={0.0001} />
                                 </Form.Item>
                             </Col>

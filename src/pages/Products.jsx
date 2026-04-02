@@ -106,16 +106,28 @@ export default function Products() {
         { title: 'Color', dataIndex: 'color', key: 'color', width: 100, render: (t) => t || '—' },
         { title: 'Price', dataIndex: 'price', key: 'price', width: 95, align: 'right', render: (v, r) => <span className="font-medium">{formatCurrency(v, r.currency)}</span> },
         { title: 'Cost', dataIndex: 'costPrice', key: 'costPrice', width: 95, align: 'right', render: (v, r) => <span className="text-gray-600">{formatCurrency(v, r.currency)}</span> },
-        { title: 'Stock', key: 'stock', width: 110, align: 'right', render: (_, r) => {
+        { title: 'Stock', key: 'stock', width: 130, align: 'right', render: (_, r) => {
             const stocks = r.ProductStocks || r.inventory || [];
             const virtual = stocks.find(s => s.isVirtual);
             const physical = stocks.filter(s => !s.isVirtual).reduce((s, i) => s + parseFloat(i.quantity || 0), 0);
             
-            // Final Logic: Show Physical Stock if it exists (>0). 
-            // Only if Physical is 0, show Virtual Potential (Computed).
             const isManualStockExists = physical > 0;
             const total = isManualStockExists ? physical : (virtual ? Number(virtual.quantity) : 0);
             const isComputed = !isManualStockExists && !!virtual;
+
+            // Threshold labels - handle both camelCase and snake_case from API
+            const reorderLevel = Number(r.reorderLevel ?? r.reorder_level) || 0;
+            const lowThreshold = Number(r.lowStockThreshold ?? r.low_stock_threshold) || 0;
+            const mediumThreshold = Number(r.mediumStockThreshold ?? r.medium_stock_threshold) || 0;
+
+            let statusTag = null;
+            if (total < reorderLevel || total === 0) {
+                statusTag = <Tag color="error" style={{ fontSize: '10px', marginTop: '2px' }}>CRITICAL</Tag>;
+            } else if (lowThreshold > 0 && total <= lowThreshold) {
+                statusTag = <Tag color="warning" style={{ fontSize: '10px', marginTop: '2px' }}>LOW STOCK</Tag>;
+            } else if (mediumThreshold > 0 && total <= mediumThreshold) {
+                statusTag = <Tag color="processing" style={{ fontSize: '10px', marginTop: '2px' }}>MEDIUM STOCK</Tag>;
+            }
             
             return (
                 <div className="flex flex-col items-end">
@@ -124,6 +136,7 @@ export default function Products() {
                         <span className="font-medium">{formatNumber(total)}</span>
                         <span className="text-[10px] text-gray-400 uppercase font-bold">{r.unitOfMeasure || 'EACH'}</span>
                     </span>
+                    {statusTag}
                     {isComputed && <Tag color="blue" style={{ fontSize: '9px', lineHeight: '14px', margin: 0, padding: '0 4px', borderRadius: '4px' }}>COMPUTED</Tag>}
                 </div>
             );
