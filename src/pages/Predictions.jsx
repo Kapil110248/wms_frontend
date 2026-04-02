@@ -276,7 +276,7 @@ export default function Predictions() {
                                 return (
                                     <div
                                         key={item.id}
-                                        className={`bg-white rounded-xl border ${cfg.border} shadow-sm overflow-hidden flex flex-col`}
+                                        className={`bg-white rounded-xl border ${cfg.border} shadow-sm overflow-hidden flex flex-col ${item.isOrdered ? 'opacity-70 contrast-75' : ''}`}
                                     >
                                         {/* Card header */}
                                         <div className={`px-4 pt-4 pb-3 ${cfg.bg}`}>
@@ -285,13 +285,20 @@ export default function Predictions() {
                                                     <p className="font-bold text-gray-800 text-base leading-tight">{item.name}</p>
                                                     <p className="text-xs text-gray-400 mt-0.5">{item.sku || item.categoryName || ''}</p>
                                                 </div>
-                                                <span
-                                                    className="shrink-0 flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold text-white"
-                                                    style={{ background: cfg.badgeBg }}
-                                                >
-                                                    {(item.urgency === 'critical' || item.urgency === 'high') && <WarningOutlined />}
-                                                    {cfg.label}
-                                                </span>
+                                                <div className="flex flex-col items-end gap-1">
+                                                    <span
+                                                        className="shrink-0 flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold text-white"
+                                                        style={{ background: cfg.badgeBg }}
+                                                    >
+                                                        {(item.urgency === 'critical' || item.urgency === 'high') && <WarningOutlined />}
+                                                        {cfg.label}
+                                                    </span>
+                                                    {item.isOrdered && (
+                                                        <Tag color="default" className="m-0 border-none px-2 rounded-full font-bold text-[10px] uppercase">
+                                                            Already Ordered ({item.pendingOrderQty})
+                                                        </Tag>
+                                                    )}
+                                                </div>
                                             </div>
 
                                             {/* Current Stock + Avg Usage */}
@@ -323,7 +330,7 @@ export default function Predictions() {
                                         </div>
 
                                         {/* Card body */}
-                                        <div className="px-4 py-3 flex-1 flex flex-col gap-3">
+                                        <div className="px-4 py-3 flex-1 flex flex-col gap-3 relative">
                                             {/* Recommended buy */}
                                             <div>
                                                 <div className="flex items-center justify-between">
@@ -344,12 +351,17 @@ export default function Predictions() {
                                             <Button
                                                 block
                                                 icon={<ShoppingCartOutlined />}
-                                                onClick={() => handleOpenReorder(item)}
-                                                style={{ background: '#0d9488', borderColor: '#0d9488', color: '#fff' }}
+                                                onClick={() => !item.isOrdered && handleOpenReorder(item)}
+                                                disabled={item.isOrdered}
+                                                style={{ 
+                                                    background: item.isOrdered ? '#bfbfbf' : '#0d9488', 
+                                                    borderColor: item.isOrdered ? '#bfbfbf' : '#0d9488', 
+                                                    color: '#fff' 
+                                                }}
                                                 className="rounded-lg font-medium"
-                                                type="primary"
+                                                type={item.isOrdered ? 'default' : 'primary'}
                                             >
-                                                Create Reorder
+                                                {item.isOrdered ? 'Already Ordered' : 'Create Reorder'}
                                             </Button>
                                         </div>
                                     </div>
