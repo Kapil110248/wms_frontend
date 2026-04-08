@@ -3,7 +3,9 @@ import { Table, Button, Input, Card, Modal, Form, Tag, Row, Col, Typography, Spa
 import { SafetyOutlined, PlusOutlined, LockOutlined, EditOutlined, DeleteOutlined, SaveOutlined, ReloadOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import { MainLayout } from '../components/layout/MainLayout';
 import { useAuthStore } from '../store/authStore';
-import { mockRoles } from '../mockData';
+import { apiRequest } from '../api/client';
+import { ROUTE_PERMISSIONS, ROLE_ACTIONS, ROLE_FEATURES } from '../permissions';
+import { Badge } from 'antd';
 
 const { Title, Text } = Typography;
 const { Panel } = Collapse;
@@ -20,30 +22,29 @@ export default function Roles() {
     const [form] = Form.useForm();
 
     const fetchRoles = useCallback(async () => {
-        /* API call commented - using mock data
         try {
             setLoading(true);
-            const res = await fetch(`${API_BASE_URL}/roles`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setRoles(Array.isArray(data) ? data : (data.roles || []));
+            const res = await apiRequest('/api/roles', { method: 'GET' }, token);
+            if (res.success) {
+                setRoles(res.data || []);
             }
         } catch (err) {
-            console.error(err);
+            console.error('Fetch roles error:', err);
+            message.error('Failed to load roles registry');
         } finally {
             setLoading(false);
         }
-        */
-        // Instant loading
-        setRoles(mockRoles);
-        setLoading(false);
     }, [token]);
 
     const fetchPermissions = useCallback(async () => {
-        setPermissions({});
-        setGroupedPerms({});
+        // Build permissions based on the config file
+        const perms = {
+            'System Routes': Object.keys(ROUTE_PERMISSIONS).map(route => ({ key: `route:${route}`, action: 'View', module: 'Routes' })),
+            'Core Actions': ['create', 'read', 'update', 'delete'].map(action => ({ key: `action:${action}`, action: action.toUpperCase(), module: 'Actions' })),
+            'Features': ['company_management', 'user_management', 'system_settings'].map(feat => ({ key: `feat:${feat}`, action: 'Manage', module: 'Features' }))
+        };
+        setPermissions(perms);
+        setGroupedPerms(perms);
     }, []);
 
     useEffect(() => {
@@ -55,11 +56,21 @@ export default function Roles() {
 
     const handleSubmit = async (values) => {
         try {
-            message.success('Neural clearance parameters re-encoded');
-            setModalOpen(false);
-            fetchRoles();
+            const method = selectedRole ? 'PUT' : 'POST';
+            const url = selectedRole ? `/api/roles/${selectedRole.id}` : '/api/roles';
+            
+            const res = await apiRequest(url, {
+                method,
+                body: JSON.stringify(values)
+            }, token);
+
+            if (res.success) {
+                message.success(selectedRole ? 'Authority layer re-encoded' : 'New authority layer initialized');
+                setModalOpen(false);
+                fetchRoles();
+            }
         } catch (err) {
-            message.error('IAM logic failure');
+            message.error(err.message || 'IAM logic failure');
         }
     };
 
@@ -127,6 +138,7 @@ export default function Roles() {
                         <Row gutter={16}>
                             <Col span={10}>
                                 <Form.Item label="Clearance Layer Nomenclature" name="name" rules={[{ required: true }]}><Input placeholder="External Auditor" className="h-11 rounded-xl font-bold" /></Form.Item>
+                                <Form.Item label="Clearance Identifier (roleKey)" name="roleKey" rules={[{ required: true }]}><Input placeholder="external_auditor" className="h-11 rounded-xl font-mono text-xs" /></Form.Item>
                                 <Form.Item label="Directive Narrative" name="description"><Input.TextArea rows={3} className="rounded-xl" /></Form.Item>
                                 <Form.Item label="Spatial Scope (Warehouse Access)" name="warehouseAccess" initialValue="assigned"><Select className="h-11 rounded-xl"><Option value="all">Unrestricted (All Nodes)</Option><Option value="assigned">Confined (Assigned Nodes)</Option><Option value="none">Zero Visibility</Option></Select></Form.Item>
                             </Col>

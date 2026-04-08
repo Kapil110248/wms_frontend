@@ -466,12 +466,11 @@ export default function EditProduct() {
                                     { value: 'RAW_MATERIAL', label: '🧪 Raw Material (for production)' },
                                     { value: 'PRODUCTION', label: '🏭 Finished Product (produced)' },
                                     { value: 'SIMPLE', label: '📦 Simple Product (buy/sell)' },
-                                    { value: 'BUNDLE', label: '🛒 Bundle' },
-                                    { value: 'MULTICOMBO', label: '📦 Multicombo' },
+                                    { value: 'BUNDLE', label: '🛒 Bundle' }
                                 ]} />
                             </Form.Item>
                         </Col>
-                        {(productType === 'BUNDLE' || productType === 'MULTICOMBO') && (
+                    {productType === 'BUNDLE' && (
                             <Col xs={24} md={12}>
                                 <Form.Item name="isPhysicalBundle" valuePropName="checked" label=" ">
                                     <Checkbox className="mt-2 font-medium text-blue-600">Physical Bundle (has its own stock)</Checkbox>
@@ -517,7 +516,7 @@ export default function EditProduct() {
                             </Form.Item>
                         </Col>
                     </Row>
-                    {(productType === 'BUNDLE' || productType === 'MULTICOMBO') && (
+                    {productType === 'BUNDLE' && (
                         <div className="mt-6 border-t pt-6 bg-slate-50/30 p-4 rounded-xl">
                             <h4 className="font-bold text-slate-800 mb-2">Bundle Components</h4>
                             <p className="text-gray-500 text-sm mb-4">Add products that are included in this bundle/kit. Virtual inventory gets computed based on lowest component limits.</p>

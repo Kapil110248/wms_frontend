@@ -31,6 +31,7 @@ const URGENCY_CONFIG = {
     high: { label: 'High', bg: 'bg-orange-50', border: 'border-orange-200', badgeBg: '#f59e0b', statBg: '#fffbeb', statText: '#d97706' },
     medium: { label: 'Medium', bg: 'bg-teal-50/40', border: 'border-teal-200', badgeBg: '#0d9488', statBg: '#f0fdfa', statText: '#0d9488' },
     low: { label: 'Low / OK', bg: 'bg-green-50/30', border: 'border-green-200', badgeBg: '#22c55e', statBg: '#f0fdf4', statText: '#16a34a' },
+    ordered: { label: 'Ordered', bg: 'bg-slate-50', border: 'border-slate-200', badgeBg: '#64748b', statBg: '#f8fafc', statText: '#475569' },
 };
 
 const daysColor = (days, stock) => {
@@ -67,7 +68,7 @@ export default function Predictions() {
     const [formulas, setFormulas] = useState([]);
     const [suppliers, setSuppliers] = useState([]);
     const [filter, setFilter] = useState('all');
-    const [counts, setCounts] = useState({ critical: 0, high: 0, medium: 0, low: 0 });
+    const [counts, setCounts] = useState({ critical: 0, high: 0, medium: 0, low: 0, ordered: 0 });
 
     // Reorder Modal State
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -89,10 +90,11 @@ export default function Predictions() {
             setFormulas(formulaRes.data || []);
             setSuppliers(supplierRes.data || []);
 
-            const c = { critical: 0, high: 0, medium: 0, low: 0 };
+            const c = { critical: 0, high: 0, medium: 0, low: 0, ordered: 0 };
             const enriched = list.map(item => {
                 const urgency = getUrgency(item);
                 c[urgency]++;
+                if (item.isOrdered) c.ordered++;
                 return { ...item, urgency };
             });
             // Sort: critical first
@@ -115,9 +117,9 @@ export default function Predictions() {
         const hasFormula = formulas.some(f => f.productId === item.id);
         form.setFieldsValue({
             quantity: item.suggestedReorder || 0,
-            warehouseId: item.warehouseId || warehouses[0]?.id,
+            warehouseId: item.warehouseId || (warehouses.length > 0 ? warehouses[0].id : null),
             type: hasFormula ? 'production' : 'purchase',
-            supplierId: item.supplierId || suppliers[0]?.id
+            supplierId: item.supplierId || (suppliers.length > 0 ? suppliers[0].id : null)
         });
         setIsModalOpen(true);
     };
@@ -170,7 +172,11 @@ export default function Predictions() {
         }
     };
 
-    const filtered = filter === 'all' ? data : data.filter(d => d.urgency === filter);
+    const filtered = filter === 'all' 
+        ? data 
+        : filter === 'ordered' 
+            ? data.filter(d => d.isOrdered)
+            : data.filter(d => d.urgency === filter);
 
     return (
         <MainLayout>
@@ -202,13 +208,14 @@ export default function Predictions() {
                 </div>
 
                 {/* Stat cards */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                     {[
                         { key: 'critical', label: 'Critical' },
                         { key: 'high', label: 'High' },
                         { key: 'medium', label: 'Medium' },
                         { key: 'low', label: 'Low / OK' },
-                    ].map(({ key, label }) => {
+                        { key: 'ordered', label: 'Ordered', icon: <ShoppingCartOutlined /> },
+                    ].map(({ key, label, icon }) => {
                         const cfg = URGENCY_CONFIG[key];
                         return (
                             <button
@@ -222,8 +229,10 @@ export default function Predictions() {
                                     ringColor: cfg.statText,
                                 }}
                             >
-                                <div className="text-3xl font-bold" style={{ color: cfg.statText }}>{counts[key]}</div>
-                                <div className="text-sm mt-1 font-medium" style={{ color: cfg.statText }}>{label}</div>
+                                <div className="text-3xl font-bold flex items-center justify-center gap-2" style={{ color: cfg.statText }}>
+                                    {icon} {counts[key]}
+                                </div>
+                                <div className="text-[10px] sm:text-sm mt-1 font-black uppercase tracking-widest" style={{ color: cfg.statText }}>{label}</div>
                             </button>
                         );
                     })}
@@ -294,10 +303,13 @@ export default function Predictions() {
                                                         {cfg.label}
                                                     </span>
                                                     {item.isOrdered && (
-                                                        <Tag color="default" className="m-0 border-none px-2 rounded-full font-bold text-[10px] uppercase">
-                                                            Already Ordered ({item.pendingOrderQty})
+                                                        <Tag color="geekblue" className="m-0 border-none px-2 rounded-full font-black text-[10px] uppercase italic">
+                                                            Pending Arrival ({item.pendingOrderQty})
                                                         </Tag>
                                                     )}
+                                                    <Tag color="default" className="m-0 border-none px-2 rounded-full font-bold text-[9px] uppercase opacity-60">
+                                                        Node: {item.warehouseName || 'Unassigned'}
+                                                    </Tag>
                                                 </div>
                                             </div>
 
@@ -361,7 +373,7 @@ export default function Predictions() {
                                                 className="rounded-lg font-medium"
                                                 type={item.isOrdered ? 'default' : 'primary'}
                                             >
-                                                {item.isOrdered ? 'Already Ordered' : 'Create Reorder'}
+                                                {item.isOrdered ? 'Ordered product' : 'Create Reorder'}
                                             </Button>
                                         </div>
                                     </div>

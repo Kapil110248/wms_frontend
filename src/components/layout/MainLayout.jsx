@@ -166,7 +166,15 @@ export const MainLayout = ({ children }) => {
 
     const getCompanyAdminMenu = () => [
         { key: '/dashboards/company', icon: <DashboardOutlined />, label: 'Dashboard' },
-        { key: '/users', icon: <TeamOutlined />, label: 'User Management' },
+        {
+            key: 'nav-users',
+            icon: <TeamOutlined />,
+            label: 'Users & Access',
+            children: [
+                { key: '/users', label: 'User Management' },
+                { key: '/roles', label: 'Roles' },
+            ],
+        },
         {
             key: 'nav-warehouses',
             icon: <HomeOutlined />,
@@ -237,8 +245,25 @@ export const MainLayout = ({ children }) => {
         { key: '/reports', icon: <BarChartOutlined />, label: 'Productivity Report' },
     ];
 
+    const getProductionMenu = () => [
+        { key: '/production', icon: <BoxPlotOutlined />, label: 'Manufacturing Orders' },
+        { key: '/production/formulas', icon: <ThunderboltOutlined />, label: 'Formulas' },
+        { key: '/fast-scan', icon: <ScanOutlined />, label: <span className="font-bold text-blue-500">Fast Scan</span> },
+        { key: '/inventory/live', icon: <BarChartOutlined />, label: 'Live Stock' },
+    ];
+
     const allMenuItems = [
         { key: '/dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
+        {
+            key: 'nav-users',
+            icon: <TeamOutlined />,
+            label: 'Users & Access',
+            children: [
+                { key: '/users', label: 'User Management' },
+                { key: '/roles', label: 'Roles' },
+            ],
+        },
+        { key: '/settings', icon: <SettingOutlined />, label: 'Settings' },
         { key: '/stock-in', icon: <ArrowUpOutlined style={{ color: '#00FF00' }} />, label: <span className="font-bold text-green-500">Stock In</span> },
         { key: '/stock-out', icon: <ArrowDownOutlined style={{ color: '#FF0000' }} />, label: <span className="font-bold text-red-500">Stock Out</span> },
         { key: '/companies', icon: <ShopOutlined />, label: 'Company Management' },
@@ -312,7 +337,15 @@ export const MainLayout = ({ children }) => {
         },
         { key: '/reports', icon: <BarChartOutlined />, label: 'Reports' },
         { key: '/settings', icon: <SettingOutlined />, label: 'Settings' },
-        { key: '/users', icon: <TeamOutlined />, label: 'Users & Access' },
+        {
+            key: 'nav-users',
+            icon: <TeamOutlined />,
+            label: 'Users & Access',
+            children: [
+                { key: '/users', label: 'User Management' },
+                { key: '/roles', label: 'Roles' },
+            ],
+        },
     ];
 
     const getMenuItems = () => {
@@ -339,6 +372,7 @@ export const MainLayout = ({ children }) => {
         if (isPicker(userRole)) return getPickerMenu();
         if (isPacker(userRole)) return getPackerMenu();
         if (isViewer(userRole)) return getViewerMenu();
+        if (userRole.toLowerCase() === 'production') return getProductionMenu();
 
         return allMenuItems.map(item => {
             if (item.children) {
@@ -420,7 +454,7 @@ export const MainLayout = ({ children }) => {
                 open={mobileDrawerOpen}
                 width={280}
                 className="mobile-sidebar-drawer"
-                styles={{ body: { padding: 0, background: 'linear-gradient(180deg, #0f172a 0%, #0c1222 100%)', height: '100%' }, header: { background: '#0f172a', borderBottom: '1px solid rgba(148, 163, 184, 0.2)' } }}
+                styles={{ body: { padding: 0, background: 'linear-gradient(180deg, #0f172a 0%, #0c1222 100%)', height: '100%', overflowY: 'auto' }, header: { background: '#0f172a', borderBottom: '1px solid rgba(148, 163, 184, 0.2)' } }}
                 closeIcon={<span className="text-white text-xl leading-none">×</span>}
             >
                 <Menu

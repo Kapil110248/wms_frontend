@@ -95,8 +95,6 @@ export default function ProfilePage() {
         { label: 'Email', icon: <MailOutlined className="text-gray-400 mr-2" />, value: user?.email },
         { label: 'Role', icon: <IdcardOutlined className="text-gray-400 mr-2" />, value: <Tag color={getRoleColor(user?.role || '')}>{formatRole(user?.role || '')}</Tag> },
         { label: 'Status', icon: null, value: <Tag color="green">Active</Tag> },
-        { label: 'User ID', icon: null, value: user?.id },
-        { label: 'Company ID', icon: null, value: user?.companyId ?? 'N/A' },
     ];
 
     return (

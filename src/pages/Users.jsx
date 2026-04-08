@@ -32,6 +32,7 @@ export default function Users() {
     const [activeTab, setActiveTab] = useState('all');
     const [submitLoading, setSubmitLoading] = useState(false);
     const [companiesLoading, setCompaniesLoading] = useState(false);
+    const [roles, setRoles] = useState([]);
     const [form] = Form.useForm();
 
     const isSuperAdmin = currentUser?.role === 'super_admin';
@@ -62,6 +63,10 @@ export default function Users() {
             }
             const whRes = await apiRequest('/api/warehouses', { method: 'GET' }, token);
             setWarehouses(Array.isArray(whRes?.data) ? whRes.data : whRes?.data || []);
+
+            // FETCH DYNAMIC ROLES
+            const rolesRes = await apiRequest('/api/roles', { method: 'GET' }, token);
+            setRoles(Array.isArray(rolesRes?.data) ? rolesRes.data : []);
         } catch (err) {
             if (isSuperAdmin) setCompanies([]);
             setWarehouses([]);
@@ -171,7 +176,7 @@ export default function Users() {
     const activeCount = listUsers.filter(u => (u.status || '').toUpperCase() === 'ACTIVE').length;
     const inactiveCount = listUsers.filter(u => (u.status || '').toUpperCase() !== 'ACTIVE').length;
     const adminsCount = listUsers.filter(u => (u.role || '').toLowerCase().includes('admin')).length;
-    const rolesCount = ALL_ROLES.length;
+    const rolesCount = roles.length || ALL_ROLES.length;
 
     const columns = [
         {
@@ -213,7 +218,7 @@ export default function Users() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 px-0 py-4 border-b border-gray-100">
                 <Input placeholder="Search..." prefix={<SearchOutlined />} value={searchText} onChange={e => setSearchText(e.target.value)} className="w-full sm:w-56 rounded-lg" allowClear />
                 <div className="flex gap-2 w-full sm:w-auto">
-                    <Select placeholder="Role" allowClear value={roleFilter} onChange={setRoleFilter} className="flex-1 sm:w-40 rounded-lg" options={[...STAFF_ROLES, ...(isSuperAdmin ? [{ value: 'company_admin', label: 'Company Admin' }] : [])]} />
+                    <Select placeholder="Role" allowClear value={roleFilter} onChange={setRoleFilter} className="flex-1 sm:w-40 rounded-lg" options={[...STAFF_ROLES, ...((isSuperAdmin || isCompanyAdmin) ? [{ value: 'company_admin', label: 'Company Admin' }] : [])]} />
                     <Select placeholder="Warehouse" allowClear value={warehouseFilter} onChange={setWarehouseFilter} className="flex-1 sm:w-44 rounded-lg" options={warehouses.map(w => ({ value: w.id, label: w.name }))} />
                 </div>
                 <Button icon={<ReloadOutlined />} onClick={fetchUsers} loading={loading} className="w-full sm:w-auto rounded-lg">Refresh</Button>
@@ -285,7 +290,11 @@ export default function Users() {
                         ) : (
                             <>
                                 <Form.Item label="Role" name="role" rules={[{ required: true }]}>
-                                    <Select placeholder="Select role" className="rounded-lg" options={STAFF_ROLES} />
+                                    <Select
+                                        placeholder="Select role"
+                                        className="rounded-lg"
+                                        options={roles.map(r => ({ value: r.role_key, label: r.name }))}
+                                    />
                                 </Form.Item>
                                 <Form.Item label="Warehouse" name="warehouseId">
                                     <Select className="rounded-lg" allowClear placeholder="Optional" options={warehouses.map(w => ({ value: w.id, label: w.name }))} />

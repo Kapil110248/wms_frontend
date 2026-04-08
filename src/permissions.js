@@ -26,11 +26,11 @@ export const ROLE_FEATURES = {
     'viewer': ['view_reports'],
 };
 
-const ALL_ROLES = ['super_admin', 'company_admin', 'warehouse_manager', 'inventory_manager', 'admin', 'manager', 'picker', 'packer', 'warehouse_staff', 'viewer'];
+const ALL_ROLES = ['super_admin', 'company_admin', 'warehouse_manager', 'inventory_manager', 'admin', 'manager', 'picker', 'packer', 'warehouse_staff', 'viewer', 'production'];
 const ADMIN_ROLES = ['super_admin', 'company_admin', 'admin'];
 const USER_MANAGEMENT_ROLES = ['super_admin', 'company_admin', 'warehouse_manager', 'admin'];
 const MANAGEMENT_ROLES = ['super_admin', 'company_admin', 'warehouse_manager', 'inventory_manager', 'admin', 'manager'];
-const FULL_ACCESS_ROLES = ['super_admin', 'company_admin', 'warehouse_manager', 'inventory_manager', 'admin', 'manager', 'warehouse_staff'];
+const FULL_ACCESS_ROLES = ['super_admin', 'company_admin', 'warehouse_manager', 'inventory_manager', 'admin', 'manager', 'warehouse_staff', 'production'];
 const PICKER_ROUTES = ['picker', ...MANAGEMENT_ROLES];
 const PACKER_ROUTES = ['packer', ...MANAGEMENT_ROLES];
 const VIEWER_ROUTES = ['viewer', ...MANAGEMENT_ROLES];
@@ -98,6 +98,7 @@ export function getDefaultRouteForRole(role) {
         case 'packer': return '/dashboards/packer';
         case 'viewer': return '/dashboards/viewer';
         case 'warehouse_staff': return '/dashboards/warehouse-staff';
+        case 'production': return '/production';
         default: return '/dashboard';
     }
 }

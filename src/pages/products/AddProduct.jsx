@@ -287,12 +287,11 @@ export default function AddProduct() {
                                             { value: 'PRODUCTION', label: '🏭 Finished Product (produced)' },
                                             { value: 'SIMPLE', label: '📦 Simple Product (buy/sell)' },
                                             { value: 'BUNDLE', label: '🛒 Bundle' },
-                                            { value: 'MULTICOMBO', label: '📦 Multicombo' },
                                         ]} 
                                     />
                                 </Form.Item>
                             </Col>
-                            {(productType === 'BUNDLE' || productType === 'MULTICOMBO') && (
+                            {productType === 'BUNDLE' && (
                                 <Col xs={24} md={8}>
                                     <Form.Item name="isPhysicalBundle" valuePropName="checked" label=" ">
                                         <Checkbox className="mt-2 font-medium text-blue-600">Physical Bundle (has its own stock)</Checkbox>
@@ -434,18 +433,9 @@ export default function AddProduct() {
                             </Col>
                             <Col xs={24} md={12}>
                                 <Form.Item 
-                                    label="Default Warehouse" 
+                                    label="Destination Warehouse (Mandatory)" 
                                     name="warehouseId"
-                                    rules={[
-                                        ({ getFieldValue }) => ({
-                                            validator(_, value) {
-                                                if (getFieldValue('openingStock') > 0 && !value) {
-                                                    return Promise.reject(new Error('Warehouse is required when entering opening stock'));
-                                                }
-                                                return Promise.resolve();
-                                            },
-                                        }),
-                                    ]}
+                                    rules={[{ required: true, message: 'Destination warehouse is mandatory for all products' }]}
                                 >
                                     <Select allowClear placeholder="Select warehouse to store opening stock" className="rounded-lg w-full" size="large">
                                         {warehouses.map((w) => (

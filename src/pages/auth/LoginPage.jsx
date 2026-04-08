@@ -7,18 +7,13 @@ import { getDefaultRouteForRole } from '../../permissions';
 import { APP_NAME } from '../../constants';
 import logoImg from '../../assets/newlogo-removebg-preview.png';
 
-    const QUICK_LOGIN_USERS = [
-        { email: 'admin@kiaan-wms.com', password: 'Admin@123', label: 'Super Admin' },
-        { email: 'companyadmin@kiaan-wms.com', password: '123456', label: 'Company Admin' },
-        { email: 'inventorymanager@kiaan-wms.com', password: '123456', label: 'Inventory Manager' },
-        { email: 'warehousemanager@kiaan-wms.com', password: '123456', label: 'Category Manager' },
-    ];
+
 
     export default function LoginPage() {
         const navigate = useNavigate();
         const { login, user, isAuthenticated, _hasHydrated } = useAuthStore();
         const [loading, setLoading] = useState(false);
-        const [quickLoginLoading, setQuickLoginLoading] = useState(null);
+
 
         // Agar already logged in ho to apne dashboard pe bhejo
         React.useEffect(() => {
@@ -44,20 +39,7 @@ import logoImg from '../../assets/newlogo-removebg-preview.png';
             }
         };
 
-        const handleQuickLogin = async (demoUser) => {
-            setQuickLoginLoading(demoUser.email);
-            try {
-                await login(demoUser.email, demoUser.password);
-                message.success(`Logged in as ${demoUser.label}`);
-                const { user: u } = useAuthStore.getState();
-                const defaultRoute = getDefaultRouteForRole(u?.role);
-                navigate(defaultRoute, { replace: true });
-            } catch (err) {
-                message.error('Quick login failed.');
-            } finally {
-                setQuickLoginLoading(null);
-            }
-        };
+
 
         if (!_hasHydrated) {
             return (
@@ -114,20 +96,7 @@ import logoImg from '../../assets/newlogo-removebg-preview.png';
                             </Form.Item>
                         </Form>
 
-                        <Divider className="my-5 text-gray-400 text-xs font-medium">Quick Login (Demo)</Divider>
-                        <div className="grid grid-cols-2 gap-2.5">
-                            {QUICK_LOGIN_USERS.map((demoUser) => (
-                                <Button
-                                    key={demoUser.email}
-                                    size="middle"
-                                    onClick={() => handleQuickLogin(demoUser)}
-                                    loading={quickLoginLoading === demoUser.email}
-                                    className="h-9 rounded-lg border-gray-200 bg-gray-50/80 text-gray-700 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 transition-colors"
-                                >
-                                    {demoUser.label}
-                                </Button>
-                            ))}
-                        </div>
+
 
                         <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-center gap-3 text-sm">
                             <Link to="/auth/forgot-password" className="text-blue-600 hover:text-blue-700 font-medium">
