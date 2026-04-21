@@ -294,7 +294,7 @@ export default function Users() {
                                     <Select
                                         placeholder="Select role"
                                         className="rounded-lg"
-                                        options={roles.map(r => ({ value: r.role_key, label: r.name }))}
+                                        options={roles.map(r => ({ value: r.roleKey, label: r.name }))}
                                     />
                                 </Form.Item>
                                 <Form.Item label="Warehouse" name="warehouseId">

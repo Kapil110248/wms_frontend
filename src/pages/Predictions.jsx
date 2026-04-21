@@ -115,9 +115,18 @@ export default function Predictions() {
     const handleOpenReorder = (item) => {
         setSelectedItem(item);
         const hasFormula = formulas.some(f => f.productId === item.id);
+        
+        // Priority for default warehouse:
+        // 1. Item's designated production area
+        // 2. Any warehouse marked as "Production" (isProduction === true)
+        // 3. Item's current warehouse
+        // 4. Fallback to first warehouse in the list
+        const productionWh = warehouses.find(w => w.isProduction)?.id;
+        const defaultWarehouseId = item.productionAreaId || productionWh || item.warehouseId || (warehouses.length > 0 ? warehouses[0].id : null);
+
         form.setFieldsValue({
             quantity: item.suggestedReorder || 0,
-            warehouseId: item.warehouseId || (warehouses.length > 0 ? warehouses[0].id : null),
+            warehouseId: defaultWarehouseId,
             type: hasFormula ? 'production' : 'purchase',
             supplierId: item.supplierId || (suppliers.length > 0 ? suppliers[0].id : null)
         });
