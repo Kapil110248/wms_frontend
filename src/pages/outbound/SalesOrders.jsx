@@ -104,9 +104,7 @@ export default function SalesOrders() {
                 return (
                     <Space onClick={(e) => e.stopPropagation()} role="group" size="small">
                         <Button type="text" icon={<EyeOutlined />} onClick={(e) => { e.stopPropagation(); navigate(`/sales-orders/${record.id}`); }} title="View" />
-                        {canEdit && (
-                            <Button type="text" icon={<EditOutlined className="text-blue-500" />} onClick={(e) => { e.stopPropagation(); navigate(`/sales-orders/${record.id}/edit`); }} title="Edit" />
-                        )}
+                        <Button type="text" icon={<EditOutlined className="text-blue-500" />} onClick={(e) => { e.stopPropagation(); navigate(`/sales-orders/${record.id}/edit`); }} title="Edit" />
                         <Popconfirm title="Delete this order?" onConfirm={() => handleDeleteOrder(record.id)} okText="Yes" cancelText="No">
                             <Button type="text" danger icon={<DeleteOutlined />} onClick={(e) => e.stopPropagation()} title="Delete" />
                         </Popconfirm>

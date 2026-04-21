@@ -4,7 +4,7 @@ import { SafetyOutlined, PlusOutlined, LockOutlined, EditOutlined, DeleteOutline
 import { MainLayout } from '../components/layout/MainLayout';
 import { useAuthStore } from '../store/authStore';
 import { apiRequest } from '../api/client';
-import { ROUTE_PERMISSIONS, ROLE_ACTIONS, ROLE_FEATURES } from '../permissions';
+import { ROUTE_PERMISSIONS, ROLE_ACTIONS, ROLE_FEATURES, getPermissionLabel } from '../permissions';
 import { Badge } from 'antd';
 
 const { Title, Text } = Typography;
@@ -152,7 +152,7 @@ export default function Roles() {
                                                     <div className="grid grid-cols-2 gap-2">
                                                         {perms.map(p => (
                                                             <Checkbox key={p.key} value={p.key} className="text-[11px] font-bold text-slate-600">
-                                                                {p.action} <span className="text-[9px] text-gray-300">({p.key})</span>
+                                                                {getPermissionLabel(p.key)}
                                                             </Checkbox>
                                                         ))}
                                                     </div>

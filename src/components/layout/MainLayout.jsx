@@ -254,16 +254,6 @@ export const MainLayout = ({ children }) => {
 
     const allMenuItems = [
         { key: '/dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
-        {
-            key: 'nav-users',
-            icon: <TeamOutlined />,
-            label: 'Users & Access',
-            children: [
-                { key: '/users', label: 'User Management' },
-                { key: '/roles', label: 'Roles' },
-            ],
-        },
-        { key: '/settings', icon: <SettingOutlined />, label: 'Settings' },
         { key: '/stock-in', icon: <ArrowUpOutlined style={{ color: '#00FF00' }} />, label: <span className="font-bold text-green-500">Stock In</span> },
         { key: '/stock-out', icon: <ArrowDownOutlined style={{ color: '#FF0000' }} />, label: <span className="font-bold text-red-500">Stock Out</span> },
         { key: '/companies', icon: <ShopOutlined />, label: 'Company Management' },

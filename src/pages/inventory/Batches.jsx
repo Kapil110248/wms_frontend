@@ -402,7 +402,7 @@ export default function Batches() {
               <InputNumber min={0} step={0.0001} className="w-full rounded-lg" placeholder="Quantity" />
             </Form.Item>
             <Form.Item label="Unit Cost" name="unitCost">
-              <InputNumber min={0} step={0.0001} prefix="£" className="w-full rounded-lg" placeholder="Unit Cost (£)" />
+              <InputNumber min={0} step={0.0001} prefix="€" className="w-full rounded-lg" placeholder="Unit Cost (€)" />
             </Form.Item>
             <Form.Item label="Received Date" name="receivedDate">
               <DatePicker format="MM/DD/YYYY" className="w-full rounded-lg" placeholder="mm/dd/yyyy" />

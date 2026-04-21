@@ -36,6 +36,7 @@ export default function Users() {
     const [form] = Form.useForm();
 
     const isSuperAdmin = currentUser?.role === 'super_admin';
+    const isCompanyAdmin = currentUser?.role === 'company_admin';
 
     const fetchUsers = useCallback(async () => {
         if (!token) return;

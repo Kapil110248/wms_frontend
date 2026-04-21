@@ -2,9 +2,9 @@
  * API base URL - sabhi pages yahi se API call karenge.
  * .env me VITE_API_URL set karo: localhost ya Railway dono me se koi bhi use kar sakte ho.
  */
-// export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "https://mavie-backend-production.up.railway.app";
+// export const API_BASE_URL = import.meta.env.VITE_API_URL || "https://mavie-backend-production-4ffe.up.railway.app";
 /**
  * Auth token get karke headers return karta hai (Bearer token)
  * @param {string} token - useAuthStore.getState().token

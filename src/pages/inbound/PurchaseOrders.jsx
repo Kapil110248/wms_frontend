@@ -500,7 +500,7 @@ export default function PurchaseOrders() {
                     <Space size="small" wrap>
                         <Button type="link" size="small" icon={<EyeOutlined />} className="text-blue-600 p-0" onClick={() => { setSelectedPO(record); setDetailDrawerOpen(true); }}>View</Button>
                         <Button type="link" size="small" icon={<PrinterOutlined />} className="text-blue-600 p-0" onClick={() => setPrintPO(record)}>Print</Button>
-                        {isPending && <Button type="link" size="small" icon={<EditOutlined />} className="text-blue-600 p-0" onClick={() => handleEdit(record)}>Edit</Button>}
+                        <Button type="link" size="small" icon={<EditOutlined />} className="text-blue-600 p-0" onClick={() => handleEdit(record)}>Edit</Button>
                         {isPending && <Popconfirm title="Approve this PO?" onConfirm={() => handleAction(record.id, 'approve')} okText="Yes" cancelText="No"><Button type="link" size="small" className="text-green-600 p-0">Approve</Button></Popconfirm>}
                         <Popconfirm title="Delete this purchase order?" okText="Yes" cancelText="No" onConfirm={() => handleDelete(record.id)}>
                             <Button type="link" size="small" danger icon={<DeleteOutlined />} className="p-0">Delete</Button>

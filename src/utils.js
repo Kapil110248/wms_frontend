@@ -9,18 +9,18 @@ export function formatNumber(num) {
     if (num === null || num === undefined) return '0';
     // Normalize to 12 decimal places to remove floating point artifacts (e.g. .000000000002)
     const normalized = Math.round(Number(num) * 1e12) / 1e12;
-    return new Intl.NumberFormat('en-IN', {
+    return new Intl.NumberFormat('en-IE', {
         maximumFractionDigits: 20,
         minimumFractionDigits: 0,
         useGrouping: true
     }).format(normalized);
 }
 
-export function formatCurrency(amount, currency = 'USD') {
+export function formatCurrency(amount, currency = 'EUR') {
     if (amount === null || amount === undefined) return '—';
     try {
         const normalized = Math.round(Number(amount) * 1e12) / 1e12;
-        return new Intl.NumberFormat('en-IN', {
+        return new Intl.NumberFormat('en-IE', {
             style: 'currency',
             currency,
             maximumFractionDigits: 20,

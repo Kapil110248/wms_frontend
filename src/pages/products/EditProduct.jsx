@@ -395,7 +395,7 @@ export default function EditProduct() {
         }
     };
 
-    const selectedCurrency = Form.useWatch('currency', form) || 'USD';
+    const selectedCurrency = Form.useWatch('currency', form) || 'EUR';
     const costPrice = Form.useWatch('costPrice', form);
     const sellingPrice = Form.useWatch('price', form);
     const productType = Form.useWatch('productType', form);
@@ -576,7 +576,7 @@ export default function EditProduct() {
                                      size="large" 
                                      min={0} 
                                      step={0.0001} 
-                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '$'} 
+                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '€'} 
                                      placeholder="0.00" 
                                  />
                              </Form.Item>
@@ -588,7 +588,7 @@ export default function EditProduct() {
                                      size="large" 
                                      min={0} 
                                      step={0.0001} 
-                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '$'} 
+                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '€'} 
                                      placeholder="0.00" 
                                  />
                              </Form.Item>
@@ -634,7 +634,7 @@ export default function EditProduct() {
                                      size="large" 
                                      min={0} 
                                      step={0.0001} 
-                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '$'} 
+                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '€'} 
                                      placeholder="0.00" 
                                  />
                              </Form.Item>
@@ -646,7 +646,7 @@ export default function EditProduct() {
                                      size="large" 
                                      min={0} 
                                      step={0.0001} 
-                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '$'} 
+                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '€'} 
                                      placeholder="0.00" 
                                  />
                              </Form.Item>
@@ -658,7 +658,7 @@ export default function EditProduct() {
                                      size="large" 
                                      min={0} 
                                      step={0.0001} 
-                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '$'} 
+                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '€'} 
                                      placeholder="0.00" 
                                  />
                              </Form.Item>
@@ -670,7 +670,7 @@ export default function EditProduct() {
                                      size="large" 
                                      min={0} 
                                      step={0.0001} 
-                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '$'} 
+                                     addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '€'} 
                                      placeholder="0.00" 
                                  />
                              </Form.Item>
@@ -817,7 +817,7 @@ export default function EditProduct() {
                                 <InputNumber className="w-full rounded-lg" min={1} placeholder="e.g. 48" />
                             </Form.Item>
                             <Form.Item name="caseCostPrice" label="Case Cost Price" rules={[{ required: true, message: 'Required' }]}>
-                                <InputNumber className="w-full rounded-lg" min={0} step={0.00000001} addonBefore="£" placeholder="0.00" />
+                                <InputNumber className="w-full rounded-lg" min={0} step={0.00000001} addonBefore="€" placeholder="0.00" />
                             </Form.Item>
                             <div className="flex justify-end gap-2">
                                 <Button onClick={() => setPriceListModalOpen(false)}>Cancel</Button>

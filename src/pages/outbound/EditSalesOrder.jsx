@@ -155,7 +155,7 @@ export default function EditSalesOrder() {
             dataIndex: 'unitPrice',
             key: 'unitPrice',
             render: (v, record) => (
-                <InputNumber min={0} step={0.01} value={v} onChange={(val) => updateOrderItemPrice(record.productId, val)} className="w-28" prefix="£" />
+                <InputNumber min={0} step={0.01} value={v} onChange={(val) => updateOrderItemPrice(record.productId, val)} className="w-28" prefix="€" />
             ),
         },
         {

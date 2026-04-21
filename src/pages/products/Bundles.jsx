@@ -24,7 +24,7 @@ export default function Bundles() {
     const [form] = Form.useForm();
     const isSuperAdmin = user?.role === 'super_admin';
     const bundleItems = Form.useWatch('bundleItems', form) || [];
-    const selectedCurrency = Form.useWatch('currency', form) || 'USD';
+    const selectedCurrency = Form.useWatch('currency', form) || 'EUR';
 
     const fetchBundles = useCallback(async () => {
         if (!token) return;
@@ -88,7 +88,7 @@ export default function Bundles() {
                 description: values.description || null,
                 sellingPrice: values.sellingPrice,
                 costPrice: values.costPrice ?? 0,
-                currency: values.currency || 'USD',
+                currency: values.currency || 'EUR',
                 status: values.status || 'ACTIVE',
                 barcode: values.barcode || null,
                 bundleItems: (values.bundleItems || []).filter(i => i?.productId && i?.quantity > 0).map(i => ({ productId: i.productId, quantity: i.quantity })),
@@ -291,7 +291,7 @@ export default function Bundles() {
                                 </Form.Item>
                                 <Form.Item label="Cost Price" name="costPrice">
                                     <InputNumber 
-                                        addonBefore={selectedCurrency === 'USD' ? '$' : selectedCurrency === 'EUR' ? '€' : selectedCurrency === 'GBP' ? '£' : '₹'} 
+                                        addonBefore={selectedCurrency === 'EUR' ? '€' : selectedCurrency === 'USD' ? '$' : selectedCurrency === 'GBP' ? '£' : '€'} 
                                         className="w-full rounded-lg" 
                                         min={0} 
                                         step={0.0001} 
@@ -300,7 +300,7 @@ export default function Bundles() {
                                 </Form.Item>
                                 <Form.Item label="Selling Price" name="sellingPrice" rules={[{ required: true, message: 'Required' }]}>
                                     <InputNumber 
-                                        addonBefore={selectedCurrency === 'USD' ? '$' : selectedCurrency === 'EUR' ? '€' : selectedCurrency === 'GBP' ? '£' : '₹'} 
+                                        addonBefore={selectedCurrency === 'EUR' ? '€' : selectedCurrency === 'USD' ? '$' : selectedCurrency === 'GBP' ? '£' : '€'} 
                                         className="w-full rounded-lg" 
                                         min={0} 
                                         step={0.0001} 

@@ -186,6 +186,92 @@ export function hasFeature(userRole, feature) {
     return features.includes(feature);
 }
 
+export const PERMISSION_LABELS = {
+    // Routes (View permissions)
+    'route:/dashboards/super-admin': 'Super Admin Dashboard',
+    'route:/dashboards/company': 'Company Admin Dashboard',
+    'route:/dashboards/inventory-manager': 'Inventory Dashboard',
+    'route:/dashboards/picker': 'Picker Dashboard',
+    'route:/dashboards/packer': 'Packer Dashboard',
+    'route:/dashboards/manager': 'Warehouse Manager Dashboard',
+    'route:/dashboards/warehouse-staff': 'Staff Dashboard',
+    'route:/dashboards/viewer': 'Viewer Dashboard',
+    'route:/dashboard': 'General Dashboard',
+    'route:/profile': 'User Profile',
+    'route:/settings': 'System Settings',
+    'route:/users': 'User Management',
+    'route:/roles': 'Role & Permissions Management',
+    'route:/companies': 'Company Management',
+    'route:/warehouses': 'Warehouses (All)',
+    'route:/warehouses/zones': 'Storage Zones',
+    'route:/warehouses/locations': 'Bin Locations',
+    'route:/inventory': 'Inventory Overview',
+    'route:/inventory/live': 'Live Stock Board',
+    'route:/inventory/by-best-before-date': 'Expiry Date List',
+    'route:/inventory/by-location': 'Stock by Location',
+    'route:/inventory/adjustments': 'Stock Adjustments',
+    'route:/inventory/cycle-counts': 'Cycle Counting',
+    'route:/inventory/batches': 'Batch Tracking',
+    'route:/products': 'Product Catalog',
+    'route:/products/categories': 'Categories & SKUs',
+    'route:/products/bundles': 'Product Bundles',
+    'route:/products/import-export': 'Import/Export Products',
+    'route:/purchase-orders': 'Purchase Orders',
+    'route:/goods-receiving': 'Goods Receiving (GRN)',
+    'route:/suppliers': 'Supplier Management',
+    'route:/sales-orders': 'Sales Orders',
+    'route:/customers': 'Customer Management',
+    'route:/clients': 'Client Management',
+    'route:/picking': 'Pick lists & Picking',
+    'route:/packing': 'Packing Tasks',
+    'route:/shipments': 'Outbound Shipments',
+    'route:/returns': 'Returns Management',
+    'route:/transfers': 'Internal Transfers',
+    'route:/replenishment': 'Stock Replenishment',
+    'route:/integrations': 'App Integrations',
+    'route:/analytics': 'Sales Analytics',
+    'route:/reports': 'Activity Reports',
+    'route:/vat-codes': 'VAT & Tax Settings',
+    'route:/scanner': 'Mobile Scanner UI',
+    'route:/fast-scan': 'Fast Scan Utility',
+    'route:/production': 'Production Orders',
+    'route:/production/formulas': 'Manufacturing Formulas',
+    'route:/auth/login': 'Login System',
+    'route:/auth/register': 'Registration System',
+    'route:/auth/forgot-password': 'Password Reset System',
+
+    // Core Actions
+    'action:create': 'Create Records',
+    'action:read': 'Read Records',
+    'action:update': 'Update Records',
+    'action:delete': 'Delete Records',
+
+    // Features
+    'feat:company_management': 'Manage Company Data',
+    'feat:user_management': 'Manage Users & Access',
+    'feat:system_settings': 'System-wide Settings',
+};
+
+export function getPermissionLabel(key) {
+    if (PERMISSION_LABELS[key]) return PERMISSION_LABELS[key];
+    
+    // Auto-formatting if not in mapping
+    if (key.startsWith('route:')) {
+        const path = key.replace('route:', '');
+        return path.split('/').filter(Boolean).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
+    
+    if (key.startsWith('action:')) {
+        return key.replace('action:', '').toUpperCase();
+    }
+    
+    if (key.startsWith('feat:')) {
+        return key.replace('feat:', '').split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
+    
+    return key;
+}
+
 export function canManageUsers(userRole) {
     return hasFeature(userRole, 'user_management');
 }

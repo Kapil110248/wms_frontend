@@ -636,7 +636,7 @@ export default function ViewProduct() {
                             <InputNumber min={1} className="w-full" size="large" placeholder="e.g., 24" />
                         </Form.Item>
                         <Form.Item name="caseCost" label="Case Cost (£)">
-                            <InputNumber min={0} step={0.00000001} className="w-full" size="large" placeholder="0" addonBefore="£" />
+                            <InputNumber min={0} step={0.00000001} className="w-full" size="large" placeholder="0" addonBefore="€" />
                         </Form.Item>
                         <Form.Item name="leadTimeDays" label="Lead Time (days)">
                             <InputNumber min={0} className="w-full" size="large" placeholder="e.g., 7" />

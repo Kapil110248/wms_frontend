@@ -172,7 +172,7 @@ export default function Dashboard() {
         <Row gutter={[20, 20]} className="mb-8">
           {[
             { label: 'Inventory Units', value: dashboardData.kpis?.totalStock?.value?.toLocaleString() || '0', icon: <DatabaseOutlined className="text-blue-500" /> },
-            { label: 'Total Revenue', value: `$${dashboardData.kpis?.totalRevenue?.value?.toLocaleString() || '0'}`, icon: <RiseOutlined className="text-green-500" /> },
+            { label: 'Total Revenue', value: `€${dashboardData.kpis?.totalRevenue?.value?.toLocaleString() || '0'}`, icon: <RiseOutlined className="text-green-500" /> },
             { label: 'Open Orders', value: dashboardData.kpis?.pendingOrders?.value || '0', icon: <ShoppingCartOutlined className="text-purple-500" /> },
             { 
               label: 'Critical Stock', 
@@ -289,7 +289,7 @@ export default function Dashboard() {
                     </div>
                     <div className="flex flex-col items-end flex-shrink-0">
                         <span className="font-bold text-gray-900 bg-gray-50 px-2 py-0.5 rounded text-xs">{p.sold} Units</span>
-                        <span className="text-[10px] text-green-600 font-bold">${Number(p.revenue || 0).toLocaleString()}</span>
+                        <span className="text-[10px] text-green-600 font-bold">€{Number(p.revenue || 0).toLocaleString()}</span>
                     </div>
                   </div>
                 ))}
@@ -316,7 +316,7 @@ export default function Dashboard() {
                 columns={[
                   { title: 'Order #', dataIndex: 'orderNumber', render: (v) => <span className="font-bold text-blue-600">{v}</span> },
                   { title: 'Customer', dataIndex: 'customer' },
-                  { title: 'Total', dataIndex: 'total', render: (v) => <span className="font-medium">${v?.toLocaleString()}</span> },
+                  { title: 'Total', dataIndex: 'total', render: (v) => <span className="font-medium">€{v?.toLocaleString()}</span> },
                   {
                     title: 'Status',
                     dataIndex: 'status',

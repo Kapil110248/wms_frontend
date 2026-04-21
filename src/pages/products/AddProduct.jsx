@@ -92,7 +92,7 @@ export default function AddProduct() {
     }, [token]);
 
     const warehouseId = Form.useWatch('warehouseId', form);
-    const selectedCurrency = Form.useWatch('currency', form) || 'USD';
+    const selectedCurrency = Form.useWatch('currency', form) || 'EUR';
     const productType = Form.useWatch('productType', form);
 
     const fetchLocations = useCallback(async () => {
@@ -195,7 +195,7 @@ export default function AddProduct() {
                 mediumStockThreshold: values.mediumStockThreshold ?? 0,
                 maxStock: values.maxStock != null ? values.maxStock : null,
                 status: values.status || 'ACTIVE',
-                currency: values.currency || 'USD',
+                currency: values.currency || 'EUR',
                 defaultProductionAreaId: values.defaultProductionAreaId || null,
                 images: imageList.map((i) => i.url),
                 cartons: [],
@@ -246,7 +246,7 @@ export default function AddProduct() {
         lowStockThreshold: 0,
         mediumStockThreshold: 0,
         color: '',
-        currency: 'USD',
+        currency: 'EUR',
         defaultProductionAreaId: undefined,
     };
 
@@ -490,7 +490,7 @@ export default function AddProduct() {
                                         size="large" 
                                         min={0} 
                                         step={0.0001} 
-                                        addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '$'} 
+                                        addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '€'} 
                                         placeholder="0.00" 
                                     />
                                 </Form.Item>
@@ -502,7 +502,7 @@ export default function AddProduct() {
                                         size="large" 
                                         min={0} 
                                         step={0.0001} 
-                                        addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '$'} 
+                                        addonBefore={CURRENCY_OPTIONS.find(c => c.value === selectedCurrency)?.symbol || '€'} 
                                         placeholder="0.00" 
                                     />
                                 </Form.Item>
